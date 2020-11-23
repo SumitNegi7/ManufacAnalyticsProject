@@ -140,7 +140,7 @@ const classes= useStyles();
       const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       if(email.match(mailformat) && password !==null)
       {
-   
+   console.log("hello")
   //  if form is properly filled req to backend is made
         try {
                 const response=await axios.post("/login",
