@@ -4,8 +4,19 @@ const app = express();
 
 app.use(express.json())
 const cors =  require("cors")
-
+const path =require("path")
 const pool = require("./database/db")
+
+const PORT = process.env.PORT || 5000;
+// process.env.PORT
+// process.env.NODE_ENV  => production or undefined
+
+
+if(process.env.NODE_ENV ==="production"){
+    // server static content
+    // npm run build
+    app.use(express.static(path.join(__dirname,"my-app/build"))) 
+}
 
 app.use(cors())
 // allowing req from diff server
@@ -50,7 +61,7 @@ app.get("/login",async (req,res)=>{
     }
     catch(err){
         console.log(err)
-        res.status(401).json({msg:"Wrong user creadentaials"})
+        res.status(401).json({msg:"Invalid Username or Password"})
     }
 })
 
@@ -66,16 +77,21 @@ app.post("/login",async (req,res)=>{
             res.send("Sign in successful")
         }
         else{
-            res.status(401).json({msg:"Wrong user creadentaials"})
+            res.status(401).json({msg:"Invalid Username or Password"})
         }
     }
     catch(err){
         console.log(err)
-        res.status(401).json({msg:"Wrong user creadentaials"})
+        res.status(501).json({msg:"Internal Server Error"})
     }
 })
 
 
-app.listen(4000,()=>{
-    console.log("Server started In at port 4000 🔥 ")
+app.get("*",(req,res)=>{
+    res.send("<h1>Not found</h1>")
+})
+
+
+app.listen(PORT,()=>{
+    console.log("Server started In at port 5000 🔥 ")
 })

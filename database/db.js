@@ -1,4 +1,6 @@
 const Pool= require("pg").Pool;
+// Connecting to postgresql
+require("dotenv").config();
 
 
 const pool= new Pool({

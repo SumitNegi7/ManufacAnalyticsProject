@@ -57,7 +57,7 @@ const  Signup:React.FC = () =>{
         "name":name,
         "password":password
       }
-            const response=await axios.post("http://localhost:4000/register",
+            const response=await axios.post("/register",
             payload)
 
       // storing data in backend

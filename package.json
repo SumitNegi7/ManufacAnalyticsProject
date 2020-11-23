@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
+  "engines": {
+    "node":"10.19.0",
+    "yarn":"1.22.5"
+  },
+  "start":{
+    "start": "node index.js",
+    "heroku-postbuild":" cd my-app && npm install && npm run build"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.5.1"
   }

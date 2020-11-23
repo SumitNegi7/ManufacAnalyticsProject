@@ -23,6 +23,16 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 
 
+
+import {  Theme, createStyles } from '@material-ui/core/styles';
+
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close'
+
+
+
+
+
 // styling material ui elements
 const useStyles =makeStyles({
  submitbtn: {
@@ -133,7 +143,7 @@ const classes= useStyles();
    
   //  if form is properly filled req to backend is made
         try {
-                const response=await axios.post("http://127.0.0.1:4000/login",
+                const response=await axios.post("/login",
                 {email,password})
 
       //  Setting cookie on valid response
@@ -144,6 +154,7 @@ const classes= useStyles();
               } catch (err) {
       //If something goes wrong error is shown to user 
                 setError(err.response.data.msg)
+                setOpen(true)
         }
 
         }
@@ -161,14 +172,41 @@ const classes= useStyles();
     <Container fixed maxWidth="xs">
       
        <Typography component="div" style={{ marginTop:"10%",height: '65%' ,padding:15}} >
-       <Typography style={{ height:"20px",width:"350px" ,marginTop:"10px"}}>
-   {error!==""?<Alert severity="error" >{error}</Alert>:<div></div>} </Typography>
+       <Typography style={{ height:"20px",width:"300px" , marginLeft:"10%"}}>
+   {error!==""?
+  //  
+   
+(<div >
+   <Collapse in={open}>
+   <Alert severity="error"
+       action={
+         <IconButton
+           aria-label="close"
+           color="inherit"
+           size="small"
+           onClick={() => {
+             setOpen(false);
+           }}
+         >
+           <CloseIcon fontSize="inherit" />
+         </IconButton>
+       }
+     >{error}
+     </Alert>
+   </Collapse>
+   
+ </div>)
+   
+   
+   
+   
+   :<div></div>} </Typography>
        <form onSubmit={submithandler} className="App">
       
       {/* Email Field */}
-        <Typography variant="h6">
-          <AccountCircle fontSize="large"/>
-        </Typography>
+        
+          <AccountCircle style={{ fontSize: 40 }} />
+       
         <TextField
         variant ="outlined"
         style={{height:80,width:300,marginBottom:"5px"}}

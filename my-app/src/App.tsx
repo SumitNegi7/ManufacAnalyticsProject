@@ -5,15 +5,26 @@ import Signup from "../src/Components/signup.component";
 import Login from "../src/Components/login.component";
 import Profile from "../src/Components/profile.component";
 import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
-
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // Routing all the components 
 
 const  App:React.FC = () =>{
-
+  const theme = createMuiTheme({
+    palette: {
+      primary:{
+        main: '#00796b'
+      },
+      secondary: {
+        main: '#E33E7F'
+      }
+    }
+  });
 
  
   return (
   <Router>
+    <MuiThemeProvider theme={theme}>
+      
   <div>
   <Navigation/>
   {/* Navigation always loads as it is outside the switch */}
@@ -26,6 +37,7 @@ const  App:React.FC = () =>{
 </Switch>
 
   </div>
+  </MuiThemeProvider>
   </Router>
   );
 }
