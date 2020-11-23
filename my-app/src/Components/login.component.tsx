@@ -8,7 +8,6 @@ import Typography from  "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import Container from  "@material-ui/core/Container";
 import Input from '@material-ui/core/Input';
-import FilledInput from '@material-ui/core/FilledInput';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -18,42 +17,30 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton'
 import {Link} from "react-router-dom";
-import { sizing } from '@material-ui/system';
 import axios from "axios";
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { createMuiTheme } from '@material-ui/core/styles';
 
 
+
+// styling material ui elements
 const useStyles =makeStyles({
  submitbtn: {
   textDecoration:"none",
-  color:"white"
+  color:"white",
+  width:"300"
  },
 });
 
 
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
-  },
-});
+
 
 interface State {
   showPassword: boolean;
 }
+
+// Interface to accept only a particular type
 
 
 const  Login:React.FC = () =>{
@@ -63,14 +50,16 @@ const classes= useStyles();
     showPassword: false,
   });
 
-  const [email,setEmail] = useState<string|null|undefined>("")
+  const [email,setEmail] = useState<string>("")
   const [emailErr,setEmailErr] = useState<boolean>(false)
-  const [password,setPassword] = useState<string|null|undefined>("")
-  const [error,setError]=useState<string|null|undefined>("")
-  const [emailError,setemailError]=useState<string|null|undefined>("")
-  const [passwordError,setpasswordError]=useState<string|null|undefined>("")
+  const [password,setPassword] = useState<string>("")
+  const [error,setError]=useState<string>("")
+
+  const [passwordError,setpasswordError]=useState<boolean>(false)
   const history =useHistory()
   const [open, setOpen] = React.useState(true);
+
+  // all useState hooks decleration
 
 
   useEffect(()=>{
@@ -78,7 +67,8 @@ const classes= useStyles();
    
    },[])
    
-   
+// checking if the user is already logged in 
+//  if he or she is then they are redirected to profile page 
    
    const checkUser= ()=>{
    
@@ -87,76 +77,128 @@ const classes= useStyles();
      }
    
    }
-
-
+// user is stored in cookie
+  
   
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
+  // function for showing password
+
+  const onChangeHandler =(pass:any)=>{
+    
+    setPassword(pass)
+    
+    if(password.length===0 ){
+      setpasswordError(false)
+    }
+
+    else{
+      setpasswordError(true)
+    }
+
+
+  }
 
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
+// checking if email is according to the format if not custom error message 
+// is sent to the user
 
+  const validateEmail= (e: React.FocusEvent<HTMLInputElement>) =>{
 
+    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      
+      if(email.match(mailformat)) {
+          setEmailErr(false)
+        }
+
+      else{
+          setEmailErr(true)
+   }
+  }
+
+  // Submit handler checks email  and password since it can be directly 
+  // be submitted ignoring the message sent using validate Email function
   const submithandler = async (e:any)=>{
-console.log("Hewllo")
-    e.preventDefault()
-    //  "proxy":""
-  try {
-          const response=await axios.post("http://127.0.0.1:4000/login",
-          {email,password})
-
-  console.log(response)
-  Cookie.set("userInfo",JSON.stringify(response))
-  
-  history.push("/profile")
-
-        } catch (err) {
-          setError(err.response.data.msg)
-  }
-
+    
+      e.preventDefault()
+      const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if(email.match(mailformat) && password !==null)
+      {
    
+  //  if form is properly filled req to backend is made
+        try {
+                const response=await axios.post("http://127.0.0.1:4000/login",
+                {email,password})
 
-  }
+      //  Setting cookie on valid response
+                Cookie.set("userInfo",JSON.stringify(response))
+      // redirecting user to profile
+                history.push("/profile")
+
+              } catch (err) {
+      //If something goes wrong error is shown to user 
+                setError(err.response.data.msg)
+        }
+
+        }
+        else{
+        setEmailErr(true);
+
+
+        }
+
+    }
+// form designed using material ui
   return (
   <>
   
     <Container fixed maxWidth="xs">
       
-       <Typography component="div" style={{ marginTop:"15%",height: '65%' ,padding:15}} >
+       <Typography component="div" style={{ marginTop:"10%",height: '65%' ,padding:15}} >
+       <Typography style={{ height:"20px",width:"350px" ,marginTop:"10px"}}>
+   {error!==""?<Alert severity="error" >{error}</Alert>:<div></div>} </Typography>
        <form onSubmit={submithandler} className="App">
       
-      
+      {/* Email Field */}
         <Typography variant="h6">
           <AccountCircle fontSize="large"/>
         </Typography>
         <TextField
         variant ="outlined"
-        type="email"
+        style={{height:80,width:300,marginBottom:"5px"}}
         color="primary"
         label="Email"
-        // helperText="Incorrect entry."
-        required
-        style={{height:80,width:270}}
-        error={emailErr}
-        
-        onChange={(e)=>setEmail(e.target.value)}
+        helperText={emailErr===false? "":"Incorrect email."}
        
+      
+        error={emailErr}
+        onBlur={validateEmail}
+  
+        onChange={(e)=>{setEmail(e.target.value)}}
+
+      
         />
-        
+
+{/* Setting errror and validation using error prop and helper text */}
+{/* setting state on onChange event */}
          
          <FormControl  variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
+            style={{width:300,marginBottom:"5px"}}
             value={password}
+            error={passwordError}
+            required
             
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e)=>onChangeHandler(e.target.value)}
            
 
             endAdornment={
@@ -174,21 +216,21 @@ console.log("Hewllo")
             labelWidth={70}
           />
         </FormControl>  
+        {/* Password field  */}
         
-        <br/>    
-        
-<Button variant="contained" color="primary" size="large" style={{width:"75%"}} >
-<Input type="submit" name="Submit" fullWidth className={classes.submitbtn}disableUnderline={true}/>
+        {/*Submit button  */}
+    <Button variant="contained" color="primary" size="large" style={{width:"300px",marginTop:"15px",marginBottom:"10px"}} >
+        <Input type="submit"value="SIGN IN" name="Submit" fullWidth className={classes.submitbtn}disableUnderline={true}/>
     </Button>
  
-  <br/>
-     
+    
   
   
-        <Typography style={{width:"75%"}}>
-   {error!==""?<Alert severity="error" >{error}</Alert>:""}<br/> </Typography>
+        
     <Link to="/signup">Don't have an account?Sign Up</Link>
     </form>
+
+    {/*  link to signup page */}
     </Typography> 
    
     </Container>

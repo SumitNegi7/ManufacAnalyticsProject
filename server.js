@@ -4,9 +4,12 @@ const app = express();
 
 app.use(express.json())
 const cors =  require("cors")
+
 const pool = require("./database/db")
 
 app.use(cors())
+// allowing req from diff server
+
 app.post("/register",async (req,res)=>{
     console.log(req.body)
     try {

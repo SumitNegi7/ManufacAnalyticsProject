@@ -8,19 +8,9 @@ import Typography from  "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import Container from  "@material-ui/core/Container";
 import Input from '@material-ui/core/Input';
-import FilledInput from '@material-ui/core/FilledInput';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton'
 import {Link} from "react-router-dom";
 import axios from "axios";
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { setSyntheticTrailingComments } from "typescript";
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 
@@ -36,109 +26,156 @@ interface State {
 
   showPassword: boolean;
 }
-
+// interface for type checking
 
 const  Signup:React.FC = () =>{
 
-const classes = useStyles();
-  const [email,setEmail] = useState<string|null|undefined>("")
-  const [password,setPassword] = useState<string|null|undefined>("")
-  const [name,setName] = useState<string|null|undefined>("")
-  const [error,setError]=useState<string|null|undefined>("")
-  const history =useHistory()
+    const classes = useStyles();
+    const [email,setEmail] = useState<string>("")
+    const [password,setPassword] = useState<string>("")
+    const [name,setName] = useState<string>("")
+    const [error,setError]=useState<string>("")
+    const history =useHistory()
+    const [emailErr,setEmailErr] = useState<boolean>(false)
+    const [passwordErr,setPasswordErr]= useState<boolean>(false)
+    const [nameErr,setNameErr] = useState<boolean>(false)
 
 
 
-  const submithandler = async (e:any)=>{
+// function called on form submit
+    const submithandler = async (e:any)=>{
 
-    e.preventDefault()
-    //  "proxy":""
-  try {
+      e.preventDefault()
+// checking mail format
+      const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if(email.match(mailformat) && password.length>=6)
+      {
+      try {
 
-    const payload={
-      "email":email,
-      "name":name,
-      "password":password
+      const payload={
+        "email":email,
+        "name":name,
+        "password":password
+      }
+            const response=await axios.post("http://localhost:4000/register",
+            payload)
+
+      // storing data in backend
+        Cookie.set("userInfo",JSON.stringify(response))
+      // setting cookie after data is store in db
+        history.push("/profile")
+      //redirecting user to profile 
+
+          } catch (err) {
+            setError(err.response.data.msg)
+
+        // checking custom errors
+    }}
+    else{
+
+      (password.length<6)?setPasswordErr(true):setEmailErr(true)
     }
-          const response=await axios.post("http://localhost:4000/register",
-          payload)
 
-  console.log(response.data)
-  Cookie.set("userInfo",JSON.stringify(response))
-  
-  history.push("/profile")
 
-        } catch (err) {
-          setError(err.response.data.msg)
-  }
 
+    }
+
+
+// validating email before being submitted 
+    const validateEmail= (e: React.FocusEvent<HTMLInputElement>) =>{
+
+      const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if(email.match(mailformat)){
+        setEmailErr(false)
+
+      }
+      else{
+        setEmailErr(true)
+      }
+    }
    
+// checking length of password in submithandler function
+// so here we are checking length to remove error if
+// password is of length 6 or more
+    const checklength =() =>{
+      if(password.length>5){
+        setPasswordErr(false)
+      }
+    }
 
-  }
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-  return (
-  <>
-  
-    <Container fixed maxWidth="xs">
-      
-       <Typography component="div" style={{ marginTop:"50px",height: '60%' ,padding:16}} >
-    <form className="App" onSubmit={submithandler}>
-      
-      
-    <Typography variant="h6">
-          <AccountCircle fontSize="large"/>
-        </Typography>
-        <TextField
-        variant ="outlined"
-        color="primary"
-        label="Name"
-        required
-        style={{height:80,width:300}}
-        onChange={(e)=>setName(e.target.value)}
-        />
-
-<TextField
-        variant ="outlined"
-        color="primary"
-        label="Email"
-        required
-        style={{height:80,width:300}}
-        onChange={(e)=>setEmail(e.target.value)}
-        />  
-         
-         <TextField
-        variant ="outlined"
-        color="primary"
-        label="Password"
-        required
-        style={{height:80,width:300}}
-        onChange={(e)=>setPassword(e.target.value)}
-       
-        />  
-        
-          <br/>
-        
-        <Button variant="contained" color="primary" size="large" style={{width:"300px"}} >
-<Input type="submit" name="Submit" fullWidth className={classes.submitbtn}disableUnderline={true}/>
-    </Button>
-<br/>
-    <Typography style={{width:"75%"}}>
-   {error!==""?<Alert severity="error" >{error}</Alert>:""} </Typography>
-   
-   
-    </form>
     
-    
-    <Typography style={{marginLeft:"16%"}}>
-    <Link to="/signin">Already have an account?Sign In</Link>
-    </Typography>
-    </Typography> 
-    </Container>
-  </>
-  );
-}
 
-export default Signup;
+    return (
+    <>
+
+      <Container fixed maxWidth="xs">
+        
+      <Typography style={{ height:"20px",width:"350px" ,marginTop:"-10px"}}>
+   {error!==""?<Alert severity="error" >{error}</Alert>:<div></div>} </Typography>    <Typography component="div" style={{ marginTop:"50px",height: '60%' ,padding:16}} >
+      <form className="App" onSubmit={submithandler}>
+        
+       {/* setting all errors state onChange event */}
+      <Typography variant="h6">
+            <AccountCircle fontSize="large"/>
+          </Typography>
+          <TextField
+          variant ="outlined"
+          color="primary"
+          label="Name"
+          error={nameErr}
+          required
+          style={{height:80,width:300}}
+          onChange={(e)=>{setName(e.target.value);}}
+          />
+
+    <TextField
+          variant ="outlined"
+          color="primary"
+          label="Email"
+          required
+          helperText={emailErr===false? "":"Incorrect email."}
+          
+        
+          error={emailErr}
+          style={{height:80,width:300}}
+          onChange={(e)=>setEmail(e.target.value)}
+          onBlur={validateEmail}
+          />  
+            
+            <TextField
+          variant ="outlined"
+          color="primary"
+          label="Password"
+          type="password"
+          helperText={passwordErr===false? "":"Enter a password with min of 6 letters."}
+          error={passwordErr}
+          
+          style={{height:80,width:300}}
+          onChange={(e)=>{setPassword(e.target.value);checklength()}}
+          
+          
+          />  
+          
+            
+          
+          <Button variant="contained" color="primary" size="large" style={{width:"300px"}} >
+    <Input type="submit" value="SIGN UP" name="Submit" fullWidth className={classes.submitbtn}disableUnderline={true}/>
+      </Button>
+    
+      
+      
+      
+      </form>
+      
+      
+      <Typography style={{marginLeft:"20%",marginTop:"15px"}}>
+      
+      <Link to="/signin">Have an account?Sign In</Link>
+      </Typography>
+      </Typography> 
+      </Container>
+    </>
+    );
+    }
+
+    export default Signup;

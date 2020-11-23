@@ -6,9 +6,7 @@ import Login from "../src/Components/login.component";
 import Profile from "../src/Components/profile.component";
 import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 
-const authentication={
-  isLoggedIn:false
-}
+// Routing all the components 
 
 const  App:React.FC = () =>{
 
@@ -18,6 +16,7 @@ const  App:React.FC = () =>{
   <Router>
   <div>
   <Navigation/>
+  {/* Navigation always loads as it is outside the switch */}
   <Switch>
    <Route path="/signup" exact><Signup/> </Route>
    <Route path="/signin" exact><Login/> </Route>

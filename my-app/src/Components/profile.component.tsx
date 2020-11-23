@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -22,10 +22,20 @@ const useStyles = makeStyles({
   },
 });
 
+
+
  const Profile:React.FC = () => {
   const classes = useStyles();
   const history =useHistory()
+  const [user,setUser]= React.useState<boolean>(false)
 
+// Checking if user visited this page without logging in
+  useEffect(()=>{
+    verifyUser()
+  },[])
+
+
+  // Deleting cookie on logout
   const Logout = () =>{
     console.log("hello")
     // Cookie.set("userInfo",null)
@@ -34,7 +44,24 @@ const useStyles = makeStyles({
    
 
 }
+
+
+const verifyUser= ()=>{
+   
+  if(!Cookie.getJSON("userInfo")){
+    history.push("/")
+  }
+  else{
+  setUser(true)
+  }
+
+}
+
+// If user is authenticated then the profile is rendered
+// else empty div are send and user is redirected to login page 
   return (
+    <>
+    {user===true?(
       <div className="profile-container">
     <Card className={classes.root}>
       <CardActionArea>
@@ -63,7 +90,8 @@ const useStyles = makeStyles({
 </div>
       </CardActions>
     </Card>
-    </div>
+    </div>):<div></div>}
+    </>
   );
 }
 
