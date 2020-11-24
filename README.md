@@ -1,7 +1,7 @@
 # ManufacAnalyticsProject🔥 
 
 
-Introduction🚀 
+## Introduction🚀 
 
 
  🦸  User sends request to backend for Sign in or Signing up.
@@ -16,13 +16,13 @@ Introduction🚀
      directly  isautomatically redirected to login page.
 
 
- ⛵ Project live version =>  https://manufac-analytics.herokuapp.com/
+ ⛵ **Project live version** =>  https://manufac-analytics.herokuapp.com/
 
 
 
 
 
-Prerequisites🚀
+## Prerequisites🚀
 
 
 
@@ -32,7 +32,7 @@ Before you continue, ensure you have met the following requirements:
 
 
 
-How to Install🚀
+## How to Install🚀
 
 
  📽  Clone the Project cd to ManufacAnalyticsProject yarn install to install backend dependencies. 
@@ -41,7 +41,7 @@ How to Install🚀
 
 
 
-How to Run the project🚀
+## How to Run the project🚀
 
 
 
@@ -53,7 +53,7 @@ How to Run the project🚀
  👨 To start the frontend server cd to my-app and run the project by yarn start.
 
 
-Technologies Used 🚀
+## Technologies Used 🚀
 
 Frontend : React,Typescript,Material-ui,HTML,CSS
 
