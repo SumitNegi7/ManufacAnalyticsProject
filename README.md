@@ -35,7 +35,7 @@ Before you continue, ensure you have met the following requirements:
 How to Install🚀
 
 
- 📽  Clone the Project and run yarn install to install backend dependencies. 
+ 📽  Clone the Project cd to ManufacAnalyticsProject yarn install to install backend dependencies. 
 
  ⛓   cd to my-app(i.e, frontend folder) and install dependencies by yarn install.
 
