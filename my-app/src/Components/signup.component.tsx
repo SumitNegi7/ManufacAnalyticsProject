@@ -110,7 +110,7 @@ const  Signup:React.FC = () =>{
 
       <Container fixed maxWidth="xs">
         
-      <Typography style={{ height:"20px",width:"350px" ,marginTop:"-10px"}}>
+      <Typography style={{ height:"20px",width:"350px" ,paddingTop:"10px",paddingLeft:"5%"}}>
    {error!==""?<Alert severity="error" >{error}</Alert>:<div></div>} </Typography>    <Typography component="div" style={{ marginTop:"50px",height: '60%' ,padding:16}} >
       <form className="App" onSubmit={submithandler}>
         

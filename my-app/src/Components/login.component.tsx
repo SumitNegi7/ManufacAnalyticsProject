@@ -101,11 +101,11 @@ const classes= useStyles();
     setPassword(pass)
     
     if(password.length===0 ){
-      setpasswordError(false)
+      setpasswordError(true)
     }
 
     else{
-      setpasswordError(true)
+      setpasswordError(false)
     }
 
 

@@ -38,12 +38,12 @@ app.post("/register",async (req,res)=>{
         else{
         //saving new user to database 
             const newUser = await pool.query("INSERT INTO users (email,password,name) VALUES ($1,$2,$3) RETURNING *",[email,password,name] );
-            res.send("Sign in Successfull");
+            res.status(200).json({msg:"Sign in Successfull"});
         
         }
     
 } catch (error) {
-        console.error(error.message)
+    res.status(501).json({msg:"Internal Server Error"})
     }
 })
 
