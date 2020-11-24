@@ -15,6 +15,7 @@ const useStyles = makeStyles({
   root: {
     maxWidth: 300,
     justifyContent: "center",
+    margin:"8px"
     
   },
   media: {

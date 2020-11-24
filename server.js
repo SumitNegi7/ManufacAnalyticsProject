@@ -29,15 +29,17 @@ app.post("/register",async (req,res)=>{
         const {email,password,name} = req.body;
 
         const checkUser = await pool.query("SELECT * FROM users WHERE email=($1) ",[email]);
+       
     //  Checking if user already exists
     
         if(checkUser.rows[0]){
-
+ 
             res.status(401).json({msg:"User Already Exists"})
         }
         
         else{
         //saving new user to database 
+      
             const newUser = await pool.query("INSERT INTO users (email,password,name) VALUES ($1,$2,$3) RETURNING *",[email,password,name] );
             res.status(200).json({msg:"Sign in Successfull"});
         
@@ -51,8 +53,7 @@ app.post("/register",async (req,res)=>{
 
 app.get("/login",async (req,res)=>{
     try{
-        const {email,password} = req.body;
-        // user authentication => if the login credentials for the user are correct
+       
 
         const oldUser = await pool.query("SELECT * FROM users ");
 
