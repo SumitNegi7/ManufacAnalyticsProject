@@ -55,6 +55,6 @@ Before you continue, ensure you have met the following requirements:
 
 ## Technologies Used 🚀
 
-Frontend : React,Typescript,Material-ui,HTML,CSS
+**Frontend** : React,Typescript,Material-ui,HTML,CSS
 
-Backend : Node.js,Express.js,JS,Postgres
+**Backend** : Node.js,Express.js,JS,Postgres
