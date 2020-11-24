@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import Cookie from "js-cookie";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -11,7 +11,7 @@ import Input from '@material-ui/core/Input';
 import {Link} from "react-router-dom";
 import axios from "axios";
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 
 
 const useStyles =makeStyles({

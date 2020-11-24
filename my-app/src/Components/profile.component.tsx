@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import Cookie from "js-cookie";
 
 const useStyles = makeStyles({
@@ -32,7 +31,7 @@ const useStyles = makeStyles({
 
 // Checking if user visited this page without logging in
   useEffect(()=>{
-    verifyUser()
+    verifyUser();
   },[])
 
 

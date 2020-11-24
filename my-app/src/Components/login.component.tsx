@@ -2,7 +2,6 @@ import React,{useState,useEffect} from "react";
 import Cookie from "js-cookie";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { ButtonGroup } from "@material-ui/core";
 import TextField from  "@material-ui/core/TextField";
 import Typography from  "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
@@ -11,7 +10,6 @@ import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -20,12 +18,6 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import { Alert } from '@material-ui/lab';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-
-
-
-
-import {  Theme, createStyles } from '@material-ui/core/styles';
-
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close'
 

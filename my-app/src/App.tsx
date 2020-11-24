@@ -4,7 +4,7 @@ import Navigation from "../src/Components/navigation.component";
 import Signup from "../src/Components/signup.component";
 import Login from "../src/Components/login.component";
 import Profile from "../src/Components/profile.component";
-import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // Routing all the components 
 
