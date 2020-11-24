@@ -55,6 +55,6 @@ How to Run the project🚀
 
 Technologies Used 🚀
 
-Frontend : React,Typescript,Material-ui
+Frontend : React,Typescript,Material-ui,HTML,CSS
 
 Backend : Node.js,Express.js,JS,Postgres
